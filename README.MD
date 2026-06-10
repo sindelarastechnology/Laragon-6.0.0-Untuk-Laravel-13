@@ -1,6 +1,6 @@
 # 🚀 Tutorial Instalasi Laragon v6 untuk Laravel 13
 
-Panduan lengkap instalasi **Laragon v6** beserta konfigurasi PHP, Apache, MySQL, dan environment yang dibutuhkan untuk menjalankan project **Laravel 13**. Tutorial ini mencakup instalasi untuk **Windows** dan **macOS**.
+Panduan lengkap instalasi **Laragon v6** beserta konfigurasi PHP, Apache, MySQL, Composer, dan environment yang dibutuhkan untuk menjalankan project **Laravel 13**. Tutorial ini mencakup instalasi untuk **Windows** dan **macOS**.
 
 ---
 
@@ -9,6 +9,7 @@ Panduan lengkap instalasi **Laragon v6** beserta konfigurasi PHP, Apache, MySQL,
 - [Persyaratan Sistem](#-persyaratan-sistem)
 - [Instalasi di Windows](#-instalasi-di-windows)
 - [Instalasi di macOS](#-instalasi-di-macos)
+- [Instalasi Composer](#-instalasi-composer)
 - [Konfigurasi PHP](#-konfigurasi-php)
 - [Konfigurasi Apache](#-konfigurasi-apache)
 - [Setup Database (MySQL)](#-setup-database-mysql)
@@ -16,6 +17,7 @@ Panduan lengkap instalasi **Laragon v6** beserta konfigurasi PHP, Apache, MySQL,
 - [Konfigurasi Environment (.env)](#-konfigurasi-environment-env)
 - [Troubleshooting](#-troubleshooting)
 - [Tools Tambahan](#-tools-tambahan)
+- [Asset Tambahan](#-asset-tambahan-php--apache-build)
 
 ---
 
@@ -37,7 +39,7 @@ Panduan lengkap instalasi **Laragon v6** beserta konfigurasi PHP, Apache, MySQL,
 
 ## 🪟 Instalasi di Windows
 
-### 1. Download Laragon v6
+### 1. Download Bahan
 
 Download Bahan melalui link berikut:
 
@@ -45,9 +47,11 @@ Download Bahan melalui link berikut:
 
 👉 [Download PHP 8.3.31](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/php-8.3.31-Win32-vs16-x64.zip)
 
-👉 [Download Apache Terbaru](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/httpd-2.4.38-win64-VC11.zip)
+👉 [Download Apache 2.4.38](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/httpd-2.4.38-win64-VC11.zip)
 
 👉 [Download phpMyAdmin](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/phpMyAdmin.zip)
+
+> 💡 Lihat daftar lengkap versi PHP/Apache lainnya di bagian [Asset Tambahan](#-asset-tambahan-php--apache-build).
 
 ### 2. Install Laragon
 
@@ -57,13 +61,9 @@ Download Bahan melalui link berikut:
 
 ### 3. Tampilan Awal Laragon
 
-Setelah dibuka, Laragon akan menampilkan menu utama seperti berikut:
+Setelah dibuka, Laragon akan menampilkan menu utama dengan tombol **Start All**, **Web**, dan **Database** seperti berikut:
 
-```
-[SCREENSHOT: Tampilan utama Laragon dengan tombol Start All, Web, Database]
-```
-
-> ![alt text](6.png)
+> ![Tampilan Awal Laragon](6.png)
 
 ---
 
@@ -77,7 +77,7 @@ Laragon **tidak tersedia secara native untuk macOS**, namun kamu bisa menjalanka
 
 1. Download Laravel Herd dari [herd.laravel.com](https://herd.laravel.com/)
 2. Install file `.dmg` yang sudah diunduh
-3. Buka aplikasi Herd, ia akan otomatis menginstall PHP, Nginx, dan dnsmasq
+3. Buka aplikasi Herd, ia akan otomatis menginstall PHP, Nginx, dnsmasq, dan **Composer**
 4. Tambahkan versi PHP tambahan jika diperlukan melalui menu **Herd > PHP**
 
 ### Opsi 2: Menggunakan Homebrew + Manual Setup
@@ -112,6 +112,41 @@ Jika project Laravel kamu sudah menyertakan Sail:
 
 ---
 
+## 🎼 Instalasi Composer
+
+**Composer** adalah dependency manager untuk PHP, wajib ada untuk menjalankan project Laravel.
+
+### Windows
+
+1. Download installer resmi dari [getcomposer.org/download](https://getcomposer.org/download/) — pilih **Composer-Setup.exe**
+2. Jalankan installer:
+   - Composer akan otomatis mendeteksi PHP yang terpasang di Laragon (`C:\laragon\bin\php\php-8.3.31-Win32-vs16-x64\php.exe`)
+   - Jika tidak terdeteksi otomatis, arahkan manual ke path `php.exe` di atas
+3. Selesaikan instalasi, lalu **restart Terminal/CMD**
+4. Verifikasi instalasi:
+   ```bash
+   composer -V
+   ```
+
+> 💡 **Tips:** Laragon sebenarnya juga sudah menyediakan Composer bawaan. Cek dengan menjalankan **Terminal** dari Laragon (klik kanan → Terminal), lalu ketik `composer -V`. Jika sudah ada, kamu tidak perlu install ulang.
+
+### macOS
+
+Jika menggunakan **Laravel Herd**, Composer sudah terpasang otomatis — cukup verifikasi:
+
+```bash
+composer -V
+```
+
+Jika menggunakan **Homebrew**:
+
+```bash
+brew install composer
+composer -V
+```
+
+---
+
 ## 🐘 Konfigurasi PHP
 
 ### Mengubah Versi PHP di Laragon (Windows)
@@ -121,17 +156,13 @@ Laragon v6 mendukung multi-version PHP. Berikut cara menggantinya:
 1. Klik kanan pada area Laragon → **PHP** → **Version**
 2. Pilih versi PHP yang diinginkan (contoh: `php-8.3.31-Win32-vs16-x64`)
 
-```
-[SCREENSHOT: Menu klik kanan Laragon > PHP > Version, menampilkan pilihan versi PHP]
-```
-
-> ![alt text](1.png)
+> ![PHP Version Selector](1.png)
 
 ### Menambahkan Versi PHP Baru (Manual)
 
 Jika versi PHP yang dibutuhkan belum tersedia, kamu bisa menambahkannya secara manual:
 
-1. Download package PHP versi yang diinginkan dari [windows.php.net/download](https://windows.php.net/download/)
+1. Download package PHP versi yang diinginkan dari [windows.php.net/download](https://windows.php.net/download/) atau dari bagian [Asset Tambahan](#-asset-tambahan-php--apache-build) repo ini
 2. Extract folder hasil download ke:
    ```
    C:\laragon\bin\php\
@@ -143,11 +174,7 @@ Jika versi PHP yang dibutuhkan belum tersedia, kamu bisa menambahkannya secara m
    ```
 4. Restart Laragon, lalu pilih versi PHP baru melalui menu **PHP > Version**
 
-```
-[SCREENSHOT: Folder C:\laragon\bin\php berisi beberapa versi PHP]
-```
-
-> ![alt text](5.png)
+> ![Folder bin/php](5.png)
 
 ### Mengaktifkan Ekstensi PHP
 
@@ -180,7 +207,7 @@ Cara mengaktifkan: klik kanan Laragon → **PHP** → **Extensions**, lalu centa
 C:\laragon\bin\php\php-8.3.31-Win32-vs16-x64\php.ini
 ```
 
-Hapus tanda `;` di depan baris ekstensi yang dibutuhkan.
+Hapus tanda `;` di depan baris ekstensi yang dibutuhkan, lalu **restart Apache**.
 
 ---
 
@@ -191,15 +218,11 @@ Hapus tanda `;` di depan baris ekstensi yang dibutuhkan.
 1. Klik kanan Laragon → **Apache** → **Version**
 2. Pilih versi Apache yang diinginkan (contoh: `httpd-2.4.67-260504-Win64-VS18`)
 
-```
-[SCREENSHOT: Menu klik kanan Laragon > Apache > Version, menampilkan pilihan versi Apache]
-```
-
-> ![alt text](2.png)
+> ![Apache Version Selector](2.png)
 
 ### Menambahkan Versi Apache Baru (Manual)
 
-1. Download Apache (Win64) dari [apachelounge.com/download](https://www.apachelounge.com/download/)
+1. Download Apache (Win64) dari [apachelounge.com/download](https://www.apachelounge.com/download/) atau dari bagian [Asset Tambahan](#-asset-tambahan-php--apache-build) repo ini
 2. Extract ke folder:
    ```
    C:\laragon\bin\apache\
@@ -210,11 +233,7 @@ Hapus tanda `;` di depan baris ekstensi yang dibutuhkan.
    ```
 4. Restart Laragon dan pilih versi Apache baru.
 
-```
-[SCREENSHOT: Folder C:\laragon\bin\apache berisi beberapa versi Apache]
-```
-
-> ![alt text](4.png)
+> ![Folder bin/apache](4.png)
 
 ### Virtual Host Otomatis
 
@@ -246,11 +265,7 @@ Akses melalui browser:
 http://localhost/phpmyadmin
 ```
 
-```
-[SCREENSHOT: Folder C:\laragon\etc\apps berisi adminer, phpMyAdmin, dll]
-```
-
-> ![alt text](3.png)
+> ![Folder etc/apps](3.png)
 
 ### 3. Membuat Database Baru
 
@@ -276,6 +291,8 @@ cd nama-project
 ```bash
 composer install
 ```
+
+> Jika muncul error terkait versi PHP, pastikan Composer menggunakan PHP versi yang sesuai dengan `composer.json` project (lihat [Instalasi Composer](#-instalasi-composer) dan [Konfigurasi PHP](#-konfigurasi-php)).
 
 ### 3. Install Dependencies Frontend (NPM)
 
@@ -360,6 +377,8 @@ QUEUE_CONNECTION=database
 MAIL_MAILER=log
 ```
 
+> ⚠️ Jangan pernah commit file `.env` asli (berisi kredensial) ke repository publik. Gunakan `.env.example` sebagai template.
+
 ### Untuk macOS (Herd / Homebrew)
 
 ```env
@@ -382,11 +401,13 @@ DB_PASSWORD=password
 | Masalah | Solusi |
 |---------|--------|
 | `Class "PDO" not found` | Aktifkan ekstensi `pdo_mysql` di `php.ini` |
+| `composer: command not found` | Pastikan Composer sudah terinstall dan PATH sudah benar (lihat [Instalasi Composer](#-instalasi-composer)) |
 | Port 80/443 sudah digunakan | Matikan Skype/IIS atau ubah port Apache via Laragon Preferences |
 | `npm run dev` error CORS | Tambahkan domain `.test` di `vite.config.js` pada bagian `server.cors` |
 | Virtual host `.test` tidak terbaca | Pastikan Laragon berjalan sebagai Administrator agar bisa edit `hosts` file |
 | `Mcrypt`/`GD` extension error | Aktifkan ekstensi terkait melalui menu PHP > Extensions |
 | Permission error di macOS | Jalankan `chmod -R 775 storage bootstrap/cache` |
+| `composer install` gagal karena versi PHP | Cek `"php"` requirement di `composer.json`, lalu sesuaikan versi PHP aktif di Laragon |
 
 ---
 
@@ -401,12 +422,11 @@ Folder `etc/apps` pada Laragon berisi beberapa tools bawaan yang berguna:
 | **phpRedisAdmin** | GUI untuk manajemen Redis |
 | **Memcached** | Caching server |
 
-
 ---
 
 ## 📦 Asset Tambahan (PHP & Apache Build)
 
-Repository ini menyertakan build PHP dan Apache versi terbaru yang sudah disiapkan dan siap pakai:
+Repository ini menyertakan build PHP dan Apache versi terbaru yang sudah disiapkan dan siap pakai melalui [Releases](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases):
 
 - ✅ PHP 8.1.10 - Win32-vs16-x64
 - ✅ PHP 8.2.31 - Win32-vs16-x64
@@ -418,8 +438,8 @@ Repository ini menyertakan build PHP dan Apache versi terbaru yang sudah disiapk
 - ✅ Apache httpd-2.4.67 - Win64-VS18
 
 Cara penggunaan:
-1. Download folder versi yang dibutuhkan dari [Releases](#) repository ini
-2. Extract ke `C:\laragon\bin\php\` atau `C:\laragon\bin\apache\` sesuai jenisnya
+1. Download zip versi yang dibutuhkan dari halaman [Releases](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases) repository ini
+2. Extract isi zip ke `C:\laragon\bin\php\` atau `C:\laragon\bin\apache\` sesuai jenisnya
 3. Restart Laragon dan pilih versi melalui menu klik kanan
 
 ---
