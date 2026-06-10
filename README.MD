@@ -42,8 +42,11 @@ Panduan lengkap instalasi **Laragon v6** beserta konfigurasi PHP, Apache, MySQL,
 Download Bahan melalui link berikut:
 
 👉 [**Download Laragon v6 (Full)**](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/laragon-wamp.exe)
+
 👉 [**Download PHP 8.3.31 **](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/php-8.3.31-Win32-vs16-x64.zip)
+
 👉 [**Download Apache Terbaru **](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/httpd-2.4.38-win64-VC11.zip)
+
 👉 [**Download phpMyAdmin**](https://github.com/sindelarastechnology/Laragon-6.0.0-Untuk-Laravel-13/releases/download/Assets/phpMyAdmin.zip)
 
 ### 2. Install Laragon
